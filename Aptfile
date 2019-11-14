@@ -1,2 +1,4 @@
 jq
 https://bintray.com/kong/kong-deb/download_file?file_path=kong-1.3.bionic.$(dpkg --print-architecture).deb
+https://openresty.org/download/openresty-1.15.8.2.tar.gz
+https://github.com/Kong/openresty-patches/archive/master.tar.gz
