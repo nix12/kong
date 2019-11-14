@@ -1,5 +1,2 @@
 jq
-ca-certificates 
-curl 
-perl 
-unzip
+/app/kong.deb
