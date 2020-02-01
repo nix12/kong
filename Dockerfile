@@ -1,10 +1,9 @@
 FROM ubuntu:bionic
-LABEL maintainer="Kong Core Team <team-core@konghq.com>"
 
 ENV KONG_VERSION 1.4.0
 
 RUN apt-get update \
-  && apt-get install -y --no-install-recommends ca-certificates curl perl unzip \
+  && apt-get install -y --no-install-recommends ca-certificates curl perl unzip gettext-base \
   && rm -rf /var/lib/apt/lists/* \
   && curl -fsSLo kong.deb https://bintray.com/kong/kong-deb/download_file?file_path=kong-${KONG_VERSION}.bionic.$(dpkg --print-architecture).deb \
   && apt-get purge -y --auto-remove ca-certificates curl \
@@ -15,9 +14,11 @@ COPY docker-entrypoint.sh /docker-entrypoint.sh
 
 RUN chmod +x /docker-entrypoint.sh
 
-COPY kong.conf /kong.conf
+COPY kong.conf.template /etc/kong/kong.conf.template
 
-RUN chmod +x /kong.conf
+COPY nginx.conf.template /usr/local/openresty/nginx/conf/nginx.conf.template
+
+RUN chmod 666 /usr/local/openresty/nginx/conf/nginx.conf.template
 
 ENTRYPOINT ["/docker-entrypoint.sh"]
 
